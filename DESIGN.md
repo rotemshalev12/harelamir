@@ -17,31 +17,31 @@ colors:
   gold-glow: "rgba(242, 197, 114, 0.35)"
 typography:
   display:
-    fontFamily: "Frank Ruhl Libre, serif"
-    fontSize: "clamp(2.5rem, 6vw, 5rem)"
-    fontWeight: 700
-    lineHeight: 1.15
+    fontFamily: "Suez One, serif"
+    fontSize: "clamp(2.2rem, 4.4vw, 3.6rem)"
+    fontWeight: 400
+    lineHeight: 1.2
     letterSpacing: "normal"
   headline:
-    fontFamily: "Frank Ruhl Libre, serif"
+    fontFamily: "Suez One, serif"
     fontSize: "clamp(1.9rem, 3.4vw, 2.75rem)"
-    fontWeight: 700
+    fontWeight: 400
     lineHeight: 1.2
     letterSpacing: "normal"
   title:
-    fontFamily: "Frank Ruhl Libre, serif"
-    fontSize: "1.2rem"
-    fontWeight: 600
+    fontFamily: "Suez One, serif"
+    fontSize: "1.15rem"
+    fontWeight: 400
     lineHeight: 1.3
     letterSpacing: "normal"
   body:
-    fontFamily: "Assistant, sans-serif"
+    fontFamily: "Heebo, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.75
     letterSpacing: "normal"
   label:
-    fontFamily: "Assistant, sans-serif"
+    fontFamily: "Heebo, sans-serif"
     fontSize: "0.85rem"
     fontWeight: 600
     lineHeight: 1.4
@@ -50,6 +50,7 @@ rounded:
   sm: "10px"
   md: "14px"
   lg: "24px"
+  card-lg: "20px"
   full: "999px"
 spacing:
   xs: "8px"
@@ -126,20 +127,20 @@ A near-monochrome dark palette lit by a single warm gold accent; every other col
 
 ## 3. Typography
 
-**Display Font:** Frank Ruhl Libre (with serif fallback)
-**Body Font:** Assistant (with sans-serif fallback)
+**Display Font:** Suez One (with serif fallback)
+**Body Font:** Heebo (with sans-serif fallback)
 
-**Character:** A ceremonial serif carries anything that needs weight and occasion — the hero line, section titles, card headings — while the humanist Assistant sans handles everything conversational: body copy, labels, navigation, form fields. The pairing mirrors the brand itself: composed and considered where it matters, warm and plainspoken everywhere else.
+**Character:** Suez One's blunt, single-weight serif carries anything that needs weight and occasion — the hero line, section titles, card headings — while the humanist Heebo sans handles everything conversational: body copy, labels, navigation, form fields. The pairing mirrors the brand itself: composed and considered where it matters, warm and plainspoken everywhere else. (Migrated from the original Frank Ruhl Libre / Assistant pairing as part of the "2a" layout redesign — Suez One ships one weight, so headings never carry a `font-weight` beyond 400; its own letterforms supply the weight.)
 
 ### Hierarchy
-- **Display** (700, `clamp(2.5rem, 6vw, 5rem)`, line-height 1.15): The hero title only. Uses `text-wrap: balance` and a soft gold text-shadow to feel lit rather than flat.
-- **Headline** (700, `clamp(1.9rem, 3.4vw, 2.75rem)`, line-height 1.2): Section titles (About, Service, Gallery, Testimonials, Process, Final CTA).
-- **Title** (600, `1.2rem`, line-height 1.3): Card-level headings — service card titles, accordion headers (accordion headers run slightly larger at `1.2rem`/600).
-- **Body** (400, `1rem`, line-height 1.75): All paragraph copy. Kept to comfortable measure inside their containers (about text, service card copy, testimonial quotes).
+- **Display** (400, `clamp(2.2rem, 4.4vw, 3.6rem)`, line-height 1.2): The hero title only, in the split hero layout.
+- **Headline** (400, `clamp(1.9rem, 3.4vw, 2.75rem)`, line-height 1.2): Section titles (About, Gallery, Service, Testimonials, Process, Final CTA).
+- **Title** (400, `1.15rem`, line-height 1.3): Card/row-level headings — numbered service-row titles, accordion headers.
+- **Body** (400, `1rem`, line-height 1.75): All paragraph copy. Kept to comfortable measure inside their containers (about text, service row copy, testimonial quote).
 - **Label** (600, `0.85rem`, letter-spacing `0.08em`): The eyebrow line above each section title (e.g. "אודות", "מה מקבלים").
 
 ### Named Rules
-**The Occasion Rule.** Frank Ruhl Libre is reserved for headings and ceremonial moments (titles, card headings, the accordion, testimonial citations). It never appears in body copy, labels, or UI chrome — that boundary is what keeps the serif feeling special rather than decorative.
+**The Occasion Rule.** Suez One is reserved for headings and ceremonial moments (titles, service-row headings, the accordion, the testimonial quote and logo). It never appears in body copy, labels, or UI chrome — that boundary is what keeps the serif feeling special rather than decorative.
 
 ## 4. Elevation
 
@@ -176,11 +177,16 @@ Every component is tactile and warm: soft ambient shadows, generous rounding, an
 
 ### Navigation
 - Sticky header, transparent-to-blurred: starts as `rgba(22, 17, 12, 0.75)` with a 12px backdrop blur, and solidifies to `rgba(22, 17, 12, 0.94)` with a shadow and a subtle-gold bottom border once the page scrolls past 12px.
-- Nav links are Warm Sand Text at rest, brightening to Cream Text on hover, with a Champagne Gold underline that animates in from 0 to full width on hover (right-to-left, matching document direction).
+- Nav order follows reading/scroll order: אודות → רגעים מהאירועים → השירות → המלצות → התהליך → צרו קשר.
+- Scroll-spy driven: the link for the section currently at the top of the viewport gets Champagne Gold Bright text, 700 weight, and a solid Champagne Gold underline — no hover animation needed, since the active state is a function of scroll position, not the mouse.
+- A 3px progress track sits directly under the header, filled left-to-right (document order, RTL) with a Champagne Gold → Champagne Gold Bright gradient tracking total page-scroll percentage.
 - Mobile collapses to a hamburger (three bars morphing to an X) that opens a full-width dropdown panel in Espresso Charcoal, sliding open below the header.
 
-### Signature Component: Gallery Carousel
-An infinite, auto-scrolling marquee of event photos (`320×420px` cards, edge-masked with a horizontal fade) that pauses on hover and freezes entirely under `prefers-reduced-motion`. It's the system's one piece of ambient, always-on motion, standing in deliberate contrast to the otherwise state-driven (hover/click-triggered) motion everywhere else.
+### Signature Component: Fluid-Hover Gallery
+A static row of 4 event photos (440px tall, `flex: 1` at rest) in the "רגעים מהאירועים" section. Hovering (or tapping, on touch) one photo grows it to `flex: 1.7` while its siblings shrink to `flex: 0.85` and dim to `brightness(0.85)`; the hovered photo also gets a subtle `scale(1.02)` and a modest shadow upgrade (`0 16px 36px rgba(0,0,0,.4)`, up from the resting `--shadow-soft`). The growth/scale/dim amounts are deliberately kept restrained — an earlier draft used `flex: 3.2`, `scale(1.04)`, and `brightness(0.72)`, which read as too aggressive a "pop" for this brand's restraint; the current values are the intentional, toned-down replacement. Replaces the previous infinite auto-scrolling marquee.
+
+### Cursor-Follow Glow
+A soft 420px Champagne Gold radial glow that trails the mouse cursor, scoped to the Hero + About region only (`.glow-region`). Disabled under `prefers-reduced-motion` and on coarse-pointer (touch) devices, since it depends on continuous mouse movement.
 
 ## 6. Do's and Don'ts
 
