@@ -572,8 +572,8 @@ section { position: relative; }
 }
 
 .gallery-bento-item.is-featured {
-  grid-column: span 2;
-  grid-row: span 5;
+  grid-column: span 1;
+  grid-row: span 3;
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-soft-lg), var(--shadow-glow);
 }
