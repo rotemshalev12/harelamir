@@ -573,7 +573,7 @@ section { position: relative; }
 
 .gallery-bento-item.is-featured {
   grid-column: span 2;
-  grid-row: span 2;
+  grid-row: span 5;
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-soft-lg), var(--shadow-glow);
 }
@@ -582,6 +582,7 @@ section { position: relative; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   display: block;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
