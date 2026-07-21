@@ -100,28 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---- Gallery fluid hover ----
-  const galleryFluid = document.getElementById('gallery-fluid');
-  if (galleryFluid) {
-    const items = Array.from(galleryFluid.querySelectorAll('.gallery-fluid-item'));
-
-    const setHovered = (index) => {
-      items.forEach((item, i) => {
-        item.classList.toggle('is-hovered', i === index);
-        item.classList.toggle('is-dimmed', index !== null && i !== index);
-      });
-    };
-
-    items.forEach((item, i) => {
-      item.addEventListener('mouseenter', () => setHovered(i));
-      item.addEventListener('mouseleave', () => setHovered(null));
-      item.addEventListener('click', () => {
-        const isHovered = item.classList.contains('is-hovered');
-        setHovered(isHovered ? null : i);
-      });
-    });
-  }
-
   // ---- Testimonials rotation ----
   const TESTIMONIALS = [
     { quote: '"הראל יא מלך! היה פשוט חלום. תודה על הכל!! היה מדהים ואנשים התלהבו בטירוף. סחתיין עליך!! אנחנו עוד מתאוששים כאן ומנסים לארגן את המילים, אבל רצינו להגיד תודה מכל הלב. היה לנו אירוע באמת חלומי ואנחנו מקבלים כל כך הרבה מחמאות. הניהול שלך לאורך כל היום נתן לנו שקט נפשי ואפשר לנו פשוט ליהנות מכל רגע. תודה על הכל!"', name: 'שחר ודנה', date: '24.07' },
