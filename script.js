@@ -141,26 +141,55 @@ document.addEventListener('DOMContentLoaded', () => {
   const testimonialName = document.getElementById('testimonial-name');
   const testimonialDate = document.getElementById('testimonial-date');
   const testimonialDots = document.querySelectorAll('.testimonial-dot');
+  const testimonialsSingle = document.querySelector('.testimonials-single');
 
   if (testimonialQuote && testimonialDots.length) {
+    let currentTestimonial = 0;
+
+    const showTestimonial = (index) => {
+      const t = TESTIMONIALS[index];
+      if (!t) return;
+      currentTestimonial = index;
+
+      testimonialDots.forEach((d) => d.classList.toggle('is-active', Number(d.dataset.index) === index));
+
+      testimonialQuote.style.opacity = '0';
+      window.setTimeout(() => {
+        testimonialQuote.textContent = t.quote;
+        testimonialName.textContent = t.name;
+        testimonialDate.textContent = t.date;
+        testimonialQuote.style.opacity = '1';
+      }, prefersReducedMotion ? 0 : 200);
+    };
+
     testimonialDots.forEach((dot) => {
-      dot.addEventListener('click', () => {
-        const index = Number(dot.dataset.index);
-        const t = TESTIMONIALS[index];
-        if (!t) return;
-
-        testimonialDots.forEach((d) => d.classList.remove('is-active'));
-        dot.classList.add('is-active');
-
-        testimonialQuote.style.opacity = '0';
-        window.setTimeout(() => {
-          testimonialQuote.textContent = t.quote;
-          testimonialName.textContent = t.name;
-          testimonialDate.textContent = t.date;
-          testimonialQuote.style.opacity = '1';
-        }, prefersReducedMotion ? 0 : 200);
-      });
+      dot.addEventListener('click', () => showTestimonial(Number(dot.dataset.index)));
     });
+
+    // ---- Swipe to navigate (mobile) ----
+    if (testimonialsSingle) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      testimonialsSingle.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      testimonialsSingle.addEventListener('touchend', (e) => {
+        const deltaX = e.changedTouches[0].clientX - touchStartX;
+        const deltaY = e.changedTouches[0].clientY - touchStartY;
+
+        if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+        const count = TESTIMONIALS.length;
+        // RTL reading order: swipe left (finger moves left) -> next, swipe right -> previous
+        const next = deltaX < 0
+          ? (currentTestimonial + 1) % count
+          : (currentTestimonial - 1 + count) % count;
+        showTestimonial(next);
+      }, { passive: true });
+    }
   }
 
   // ---- Scroll reveal animations ----

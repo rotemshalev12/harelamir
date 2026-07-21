@@ -1021,9 +1021,11 @@ body.nav-open {
 
   /* Swipeable, snap-scrolling gallery instead of 4 cramped columns */
   .gallery-fluid {
+    flex-wrap: nowrap;
     height: 320px;
     gap: 10px;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 4px;
