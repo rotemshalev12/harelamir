@@ -569,6 +569,9 @@ section { position: relative; }
   border: 1px solid var(--color-border-subtle);
   box-shadow: var(--shadow-soft);
   cursor: pointer;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .gallery-bento-item.is-featured {
