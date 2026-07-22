@@ -564,6 +564,7 @@ section { position: relative; }
 }
 
 .gallery-bento-item {
+  background: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
   box-shadow: var(--shadow-soft);
   border-radius: var(--radius-md);
@@ -580,8 +581,8 @@ section { position: relative; }
 .gallery-bento-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  object-fit: contain;
+  object-position: center center;
   display: block;
   border-radius: var(--radius-md);
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
