@@ -170,6 +170,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ---- Gallery masonry (true shortest-column packing, no gaps) ----
+  const galleryBento = document.getElementById('gallery-bento');
+  if (galleryBento) {
+    const items = Array.from(galleryBento.querySelectorAll('.gallery-bento-item'));
+
+    const columnsForWidth = (w) => {
+      if (w <= 700) return 2;
+      if (w <= 1024) return 3;
+      return 4;
+    };
+
+    let currentColumnCount = null;
+
+    const layout = () => {
+      const columnCount = columnsForWidth(window.innerWidth);
+      if (columnCount === currentColumnCount) return;
+      currentColumnCount = columnCount;
+
+      const heights = new Array(columnCount).fill(0);
+      const columns = [];
+      for (let i = 0; i < columnCount; i++) {
+        const col = document.createElement('div');
+        col.className = 'gallery-col';
+        columns.push(col);
+      }
+
+      items.forEach((item) => {
+        const img = item.querySelector('img');
+        const ratio = (img.naturalWidth && img.naturalHeight)
+          ? img.naturalHeight / img.naturalWidth
+          : 1;
+        const shortest = heights.indexOf(Math.min(...heights));
+        columns[shortest].appendChild(item);
+        heights[shortest] += ratio;
+      });
+
+      galleryBento.innerHTML = '';
+      columns.forEach((col) => galleryBento.appendChild(col));
+    };
+
+    const imgs = items.map((item) => item.querySelector('img'));
+    Promise.all(imgs.map((img) => img.complete ? Promise.resolve() : new Promise((res) => {
+      img.addEventListener('load', res, { once: true });
+      img.addEventListener('error', res, { once: true });
+    }))).then(layout);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(layout, 200);
+    });
+  }
+
   // ---- Scroll reveal animations ----
   const revealEls = document.querySelectorAll('.reveal');
 
