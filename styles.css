@@ -554,17 +554,16 @@ section { position: relative; }
 }
 
 .gallery-bento {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 12px;
+  column-count: 4;
+  column-gap: 12px;
   width: 100%;
   margin-bottom: 48px;
 }
 
 .gallery-bento-item {
-  height: 260px;
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 12px;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
   box-shadow: var(--shadow-soft);
@@ -574,14 +573,13 @@ section { position: relative; }
 }
 
 .gallery-bento-item.is-featured {
-  height: 400px;
   border-color: var(--color-border-strong);
   box-shadow: var(--shadow-soft-lg), var(--shadow-glow);
 }
 
 .gallery-bento-item img {
-  height: 100%;
-  width: auto;
+  width: 100%;
+  height: auto;
   display: block;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -910,8 +908,7 @@ section { position: relative; }
   .hero-photo { max-width: 420px; margin: 0 auto; width: 100%; }
   .main-nav { gap: 18px; }
   .nav-link { font-size: 0.88rem; }
-  .gallery-bento-item { height: 220px; }
-  .gallery-bento-item.is-featured { height: 340px; }
+  .gallery-bento { column-count: 3; }
 }
 
 @media (max-width: 860px) {
@@ -1013,32 +1010,8 @@ body.nav-open {
     transition: none;
   }
 
-  /* Swipeable, snap-scrolling gallery instead of a dense bento grid */
-  .gallery-bento {
-    display: flex;
-    flex-wrap: nowrap;
-    height: 320px;
-    gap: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
-  }
-
-  .gallery-bento-item,
-  .gallery-bento-item.is-featured {
-    height: auto;
-    flex: 0 0 78%;
-    max-width: 280px;
-    scroll-snap-align: center;
-  }
-
-  .gallery-bento-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  .gallery-bento { column-count: 2; column-gap: 10px; }
+  .gallery-bento-item { margin-bottom: 10px; }
 }
 
 @media (max-width: 480px) {
